@@ -1,0 +1,3 @@
+myMoveDynamicMesh.C
+
+EXE = $(FOAM_APPBIN)/myMoveDynamicMesh
