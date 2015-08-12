@@ -112,6 +112,7 @@ void writeWeights(const polyMesh& mesh)
 int main(int argc, char *argv[])
 {
 #   include "addRegionOption.H"
+#   include "addOverwriteOption.H"
     argList::addBoolOption
     (
         "checkAMI",
@@ -122,7 +123,9 @@ int main(int argc, char *argv[])
 #   include "createTime.H"
 #   include "createNamedDynamicFvMesh.H"
 
-    const bool checkAMI  = args.optionFound("checkAMI");
+    const bool checkAMI    = args.optionFound("checkAMI");
+    const bool overwrite   = args.optionFound("overwrite");
+    const word oldInstance = mesh.pointsInstance();
 
     if (checkAMI)
     {
@@ -139,6 +142,11 @@ int main(int argc, char *argv[])
         if (checkAMI)
         {
             writeWeights(mesh);
+        }
+
+        if (overwrite)
+        {
+            mesh.setInstance(oldInstance);
         }
 
         mesh.write();
